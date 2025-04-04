@@ -36,6 +36,8 @@ internal static class GenericExtensions
                 continue;
             }
 
+            var typeofString = property.PropertyType == typeof(string);
+
             if (property.GetCustomAttributes(typeof(CommandFlag), true).FirstOrDefault() is CommandFlag commandFlag)
             {
                 var flag = commandFlag.GetFlag();
@@ -44,7 +46,12 @@ internal static class GenericExtensions
                 {
                     var dictionary = (Dictionary<string, string>)value;
                     foreach (var item in dictionary)
-                        flags.Add($"{flag} \"{item.Key}\" \"{item.Value}\"");
+                    {
+                        if (item.Key.Contains(' ') || item.Value.Contains(' '))
+                            throw new Exception($"Property {property.Name} can't contain spaces");
+
+                        flags.Add($"{flag} {item.Key} {item.Value}");
+                    }
 
                     continue;
                 }
@@ -53,15 +60,23 @@ internal static class GenericExtensions
                 {
                     var array = (IEnumerable<string>)value;
                     foreach (var item in array)
-                        flags.Add($"{flag} \"{item}\"");
+                    {
+                        if (item.Contains(' '))
+                            throw new Exception($"Property {property.Name} can't contain spaces");
+
+                        flags.Add($"{flag} {item}");
+                    }
 
                     continue;
                 }
 
-                flags.Add($"{flag} \"{value}\"");
+                if (typeofString && value.ToString().Contains(' '))
+                    value = $"\"{value}\"";
+
+                flags.Add($"{flag} {value}");
             }
 
-            if (property.PropertyType != typeof(string) && property.PropertyType.IsClass)
+            if (!typeofString && property.PropertyType.IsClass)
             {
                 var recursiveFlags = value.GetCommandFlags();
                 if (!string.IsNullOrEmpty(recursiveFlags))

@@ -69,7 +69,7 @@ internal static class WkHtmlToPdfDriver
             };
 
             if (pdfOptions?.KeepTempFiles == true)
-                await File.WriteAllTextAsync($"{tempFileNameWithoutExtension}-command.txt", $"{process.StartInfo.FileName} {process.StartInfo.Arguments}");
+                await File.WriteAllTextAsync($"{tempFileNameWithoutExtension}-command.txt", $"\"{process.StartInfo.FileName}\" {process.StartInfo.Arguments}");
 
             process.Start();
 
