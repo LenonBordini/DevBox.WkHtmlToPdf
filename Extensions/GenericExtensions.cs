@@ -47,10 +47,9 @@ internal static class GenericExtensions
                     var dictionary = (Dictionary<string, string>)value;
                     foreach (var item in dictionary)
                     {
-                        if (item.Key.Contains(' ') || item.Value.Contains(' '))
-                            throw new Exception($"Property {property.Name} can't contain spaces");
-
-                        flags.Add($"{flag} {item.Key} {item.Value}");
+                        var itemKey = item.Key.Contains(' ') ? $"\"{item.Key}\"" : item.Key;
+                        var itemValue = item.Value.Contains(' ') ? $"\"{item.Value}\"" : item.Value;
+                        flags.Add($"{flag} {itemKey} {itemValue}");
                     }
 
                     continue;
@@ -61,10 +60,8 @@ internal static class GenericExtensions
                     var array = (IEnumerable<string>)value;
                     foreach (var item in array)
                     {
-                        if (item.Contains(' '))
-                            throw new Exception($"Property {property.Name} can't contain spaces");
-
-                        flags.Add($"{flag} {item}");
+                        var itemValue = item.Contains(' ') ? $"\"{item}\"" : item;
+                        flags.Add($"{flag} {itemValue}");
                     }
 
                     continue;
