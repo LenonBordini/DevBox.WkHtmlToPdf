@@ -158,13 +158,13 @@ public class PageOptions
     /// Use this SVG file when rendering checked radiobuttons
     /// </summary>
     [CommandFlag("--radiobutton-checked-svg")]
-    public string RadiobuttonCheckedSvg { get; set; }
+    public string RadioButtonCheckedSvg { get; set; }
 
     /// <summary>
     /// Use this SVG file when rendering unchecked radiobuttons
     /// </summary>
     [CommandFlag("--radiobutton-svg")]
-    public string RadiobuttonSvg { get; set; }
+    public string RadioButtonSvg { get; set; }
 
     /// <summary>
     /// Resolve relative external links into absolute links (default true)
@@ -230,7 +230,7 @@ public class PageOptions
     /// Set viewport size if you have custom scrollbars or css attribute overflow to emulate window size
     /// </summary>
     [CommandFlag("--viewport-size")]
-    public int ViewportSize { get; set; }
+    public int ViewPortSize { get; set; }
 
     /// <summary>
     /// Wait until window.status is equal to this string before rendering page
