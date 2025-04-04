@@ -153,10 +153,5 @@ public enum PageSize
     /// <summary>
     /// 279.4 x 431.8 mm
     /// </summary>
-    Tabloid = 29,
-
-    /// <summary>
-    /// Unknown, or a user defined size.
-    /// </summary>
-    Custom = 30
+    Tabloid = 29
 }

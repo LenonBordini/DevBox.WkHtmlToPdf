@@ -70,9 +70,4 @@ public class PdfOptions
     /// Sets header and footer options
     /// </summary>
     public HeaderFooterOptions HeaderFooterOptions { get; set; }
-
-    /// <summary>
-    /// Sets TOC options
-    /// </summary>
-    public TocOptions TocOptions { get; set; }
 }
