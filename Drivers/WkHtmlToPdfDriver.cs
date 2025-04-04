@@ -39,7 +39,7 @@ internal static class WkHtmlToPdfDriver
                 throw new Exception("Could not determine wkhtmltopdf executable path");
         }
 
-        var arguments = "-q"; // Silent output, only errors - no progress messages
+        var arguments = "-q";
         if (pdfOptions != null)
         {
             var optionsFlags = pdfOptions.GetCommandFlags();
