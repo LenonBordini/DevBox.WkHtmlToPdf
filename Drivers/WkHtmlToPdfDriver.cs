@@ -82,9 +82,7 @@ internal static class WkHtmlToPdfDriver
 
             using var ms = new MemoryStream();
             using (var fileStream = new FileStream($"{tempFileNameWithoutExtension}.pdf", FileMode.Open, FileAccess.Read))
-            {
                 fileStream.CopyTo(ms);
-            }
 
             return ms.ToArray();
         }

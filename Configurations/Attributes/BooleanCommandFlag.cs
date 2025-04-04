@@ -1,9 +1,9 @@
 namespace DevBox.WkHtmlToPdf.Configurations.Attributes;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class BooleanCommandFlag : Attribute
+internal class BooleanCommandFlag : Attribute
 {
-    public BooleanCommandFlag(string trueFlag, string trueAlias = null, string falseFlag = null, string falseAlias = null)
+    internal BooleanCommandFlag(string trueFlag, string trueAlias = null, string falseFlag = null, string falseAlias = null)
     {
         TrueFlag = trueFlag;
         TrueAlias = trueAlias;

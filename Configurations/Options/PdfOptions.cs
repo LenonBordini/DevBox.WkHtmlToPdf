@@ -35,7 +35,7 @@ public class PdfOptions
     /// <summary>
     /// Generates lower quality pdf/ps. Useful to shrink the result document space
     /// </summary>
-    [CommandFlag("--lowquality", alias: "-l")]
+    [BooleanCommandFlag("--lowquality", trueAlias: "-l")]
     public bool? LowQuality { get; set; }
 
     /// <summary>

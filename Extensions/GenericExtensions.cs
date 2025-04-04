@@ -16,25 +16,16 @@ internal static class GenericExtensions
     {
         var flags = new Collection<string>();
 
-        var properties = typeof(T).GetProperties();
+        var properties = obj.GetType().GetProperties();
         foreach (var property in properties)
         {
             var value = property.GetValue(obj);
             if (value == null)
                 continue;
 
-            if (property.PropertyType != typeof(string) && property.PropertyType.IsClass)
-            {
-                var recursiveFlags = value.GetCommandFlags();
-                if (!string.IsNullOrEmpty(recursiveFlags))
-                    flags.Add($" {recursiveFlags}");
-
-                continue;
-            }
-
             if (property.GetCustomAttributes(typeof(BooleanCommandFlag), true).FirstOrDefault() is BooleanCommandFlag booleanCommandFlag)
             {
-                if (property.PropertyType == typeof(bool))
+                if (property.PropertyType == typeof(bool) || property.PropertyType == typeof(bool?))
                 {
                     if ((bool)value)
                         flags.Add(booleanCommandFlag.GetTrueFlag());
@@ -68,6 +59,15 @@ internal static class GenericExtensions
                 }
 
                 flags.Add($"{flag} \"{value}\"");
+            }
+
+            if (property.PropertyType != typeof(string) && property.PropertyType.IsClass)
+            {
+                var recursiveFlags = value.GetCommandFlags();
+                if (!string.IsNullOrEmpty(recursiveFlags))
+                    flags.Add(recursiveFlags);
+
+                continue;
             }
         }
 
