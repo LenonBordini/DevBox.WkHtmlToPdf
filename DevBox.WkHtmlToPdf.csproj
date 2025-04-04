@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <PackageId>DevBox.WkHtmlToPdf</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Lenon Bordini</Authors>
+    <PackageDescription>A simple wrapper for wkhtmltopdf in ASP.NET Core</PackageDescription>
+    <Description>A simple wrapper for wkhtmltopdf in ASP.NET Core</Description>
+    <RepositoryUrl>https://github.com/lenonbordini/DevBox.WkHtmlToPdf</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/lenonbordini/DevBox.WkHtmlToPdf</PackageProjectUrl>
+    <PackageTags>Common</PackageTags>
+    <Title>DevBox.WkHtmlToPdf</Title>
+    <Summary>A simple wrapper for wkhtmltopdf in ASP.NET Core</Summary>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Drivers/Executables/**/*.*" Pack="true" PackagePath="WkHtmlToPdf"></None>
+    <None Include="build/*.*" Pack="true" PackagePath="build"></None>
+  </ItemGroup>
+
+  <Target Name="PostClean" AfterTargets="Clean">
+    <RemoveDir Directories="$(BaseOutputPath)" /><!-- bin -->
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" /><!-- obj -->
+  </Target>
+
+</Project>

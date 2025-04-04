@@ -1,0 +1,17 @@
+<Project>
+
+    <Target Name="CopyFiles" BeforeTargets="Build">
+        <ItemGroup>     
+            <Files Include="$(MSBuildThisFileDirectory)../Drivers/Executables/**/*.*"></Files>          
+        </ItemGroup>
+        <Copy SourceFiles="@(Files)" DestinationFolder="$(OutputPath)\WkHtmlToPdf\Executables\%(RecursiveDir)" />
+    </Target>
+
+    <Target Name="CopyFilesToPublish" AfterTargets="AfterPublish">
+        <ItemGroup>
+            <Files Include="$(MSBuildThisFileDirectory)../Drivers/Executables/**/*.*"></Files>
+        </ItemGroup>
+        <Copy SourceFiles="@(Files)" DestinationFolder="$(PublishDir)\WkHtmlToPdf\Executables\%(RecursiveDir)" />
+    </Target>
+
+</Project>
