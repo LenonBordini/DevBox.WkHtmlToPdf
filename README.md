@@ -70,10 +70,10 @@ If you have a `BaseController`, you can do like below if you want (no need to in
 ```csharp
 public abstract class BaseController
 {
-    protected async Task<byte[]> PdfAsync<T>(string viewName, T model)
+    protected async Task<byte[]> ConvertViewToPdfAsync<T>(string viewName, T model = null)
     {
-        var pdfConverterService = HttpContext.RequestServices.GetRequiredService<IPdfConverterService>();
-        return await pdfConverterService.FromViewAsync(viewName, model);
+        var pdfConverter = HttpContext.RequestServices.GetRequiredService<IPdfConverterService>();
+        return await pdfConverter.FromViewAsync(viewName, model);
     }
 }
 ```
@@ -85,7 +85,7 @@ public class ExampleController : BaseController
     [HttpGet]
     public async Task<IActionResult> IndexAsync()
     {
-        var buffer = await PdfAsync("PathToView/ViewName");
+        var buffer = await ConvertViewToPdfAsync("PathToView/ViewName");
         return File(buffer, "application/pdf", "report.pdf");
     }
 }

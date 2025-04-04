@@ -22,7 +22,7 @@ internal static class WkHtmlToPdfDriver
         if (_osPlatform == null)
             _osPlatform = OSPlatformFactory.GetOSPlatform();
 
-        var basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.RelativeSearchPath ?? string.Empty, "WkHtmlToPdf");
+        var basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.RelativeSearchPath ?? string.Empty, "wkhtmltopdf");
         var tempPath = Path.Combine(basePath, "Temp");
         if (!Directory.Exists(tempPath))
             Directory.CreateDirectory(tempPath);
