@@ -23,11 +23,16 @@ public class PdfConverterService : IPdfConverterService
 
     public async Task<byte[]> FromHtmlAsync(string html, Action<PdfOptions> configureOptions)
     {
-        var pdfOptionsClone = _pdfOptions.Clone();
+        PdfOptions options;
+        if (configureOptions == null)
+            options = _pdfOptions;
+        else
+        {
+            options = _pdfOptions.Clone();
+            configureOptions.Invoke(options);
+        }
 
-        configureOptions.Invoke(pdfOptionsClone);
-
-        return await WkHtmlToPdfDriver.ConvertHtmlAsync(html, pdfOptionsClone);
+        return await WkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
     }
 
     public async Task<byte[]> FromViewAsync(string viewName, object model)

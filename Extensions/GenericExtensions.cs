@@ -6,6 +6,12 @@ namespace DevBox.WkHtmlToPdf.Extensions;
 
 internal static class GenericExtensions
 {
+    internal static T Clone<T>(this T obj) where T : class
+    {
+        var json = JsonConvert.SerializeObject(obj);
+        return JsonConvert.DeserializeObject<T>(json);
+    }
+
     internal static string GetCommandFlags<T>(this T obj) where T : class
     {
         var flags = new Collection<string>();
@@ -16,6 +22,15 @@ internal static class GenericExtensions
             var value = property.GetValue(obj);
             if (value == null)
                 continue;
+
+            if (property.PropertyType != typeof(string) && property.PropertyType.IsClass)
+            {
+                var recursiveFlags = value.GetCommandFlags();
+                if (!string.IsNullOrEmpty(recursiveFlags))
+                    flags.Add($" {recursiveFlags}");
+
+                continue;
+            }
 
             if (property.GetCustomAttributes(typeof(BooleanCommandFlag), true).FirstOrDefault() is BooleanCommandFlag booleanCommandFlag)
             {
@@ -57,11 +72,5 @@ internal static class GenericExtensions
         }
 
         return string.Join(" ", flags);
-    }
-
-    public static T Clone<T>(this T obj) where T : class
-    {
-        var json = JsonConvert.SerializeObject(obj);
-        return JsonConvert.DeserializeObject<T>(json);
     }
 }

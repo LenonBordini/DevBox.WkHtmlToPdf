@@ -10,13 +10,15 @@ public static class ServiceCollectionExtensions
     /// Setup WkHtmlToPdf library
     /// </summary>
     /// <param name="services">The IServiceCollection object</param>
-    /// <param name="configureGlobalOptions">Action to configure a global PdfOptions used for every PDF</param>
-    public static void AddWkHtmlToPdf(this IServiceCollection services, Action<PdfOptions> configureGlobalOptions = null)
+    /// <param name="configureGlobalPdfOptions">Action to configure a global PdfOptions used for every PDF</param>
+    public static IServiceCollection AddWkHtmlToPdf(this IServiceCollection services, Action<PdfOptions> configureGlobalPdfOptions = null)
     {
         var pdfOptions = new PdfOptions();
 
         services.AddDependencies(pdfOptions);
 
-        configureGlobalOptions?.Invoke(pdfOptions);
+        configureGlobalPdfOptions?.Invoke(pdfOptions);
+
+        return services;
     }
 }
