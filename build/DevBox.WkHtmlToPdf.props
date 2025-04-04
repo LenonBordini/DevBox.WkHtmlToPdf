@@ -2,14 +2,14 @@
 
     <Target Name="CopyFiles" BeforeTargets="Build">
         <ItemGroup>     
-            <Files Include="$(MSBuildThisFileDirectory)../Drivers/Executables/**/*.*"></Files>          
+            <Files Include="$(MSBuildThisFileDirectory)../wkhtmltopdf/Executables/**/*.*"></Files>
         </ItemGroup>
         <Copy SourceFiles="@(Files)" DestinationFolder="$(OutputPath)\wkhtmltopdf\Executables\%(RecursiveDir)" />
     </Target>
 
     <Target Name="CopyFilesToPublish" AfterTargets="AfterPublish">
         <ItemGroup>
-            <Files Include="$(MSBuildThisFileDirectory)../Drivers/Executables/**/*.*"></Files>
+            <Files Include="$(MSBuildThisFileDirectory)../wkhtmltopdf/Executables/**/*.*"></Files>
         </ItemGroup>
         <Copy SourceFiles="@(Files)" DestinationFolder="$(PublishDir)\wkhtmltopdf\Executables\%(RecursiveDir)" />
     </Target>
