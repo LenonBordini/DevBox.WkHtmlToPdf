@@ -28,10 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="LICENSE" Pack="true" PackagePath="" />
-    <None Include="README.md" Pack="true" PackagePath="\" />
-    <None Include="Drivers/Executables/**/*.*" Pack="true" PackagePath="wkhtmltopdf\Executables" />
     <None Include="build/*.*" Pack="true" PackagePath="build" />
+    <None Include="Drivers/Executables/**/*.*" Pack="true" PackagePath="wkhtmltopdf\Executables" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <Target Name="PostClean" AfterTargets="Clean">

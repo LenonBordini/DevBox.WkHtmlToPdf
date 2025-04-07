@@ -1,19 +1,17 @@
 <Project>
 
-    <Target Name="CopyWkhtmltopdfFiles" BeforeTargets="Build">
+    <ItemGroup>
+        <WkHtmlToPdfFiles Include="$(MSBuildThisFileDirectory)../wkhtmltopdf/Executables/**/*.*" />
+    </ItemGroup>
+
+    <Target Name="CopyWkHtmlToPdfFilesOnBuild" BeforeTargets="Build">
         <Message Text="Copying wkhtmltopdf files" />
-        <ItemGroup>     
-            <Files Include="$(MSBuildThisFileDirectory)../wkhtmltopdf/Executables/**/*.*"></Files>
-        </ItemGroup>
-        <Copy SourceFiles="@(Files)" DestinationFolder="$(OutputPath)\wkhtmltopdf\Executables\%(RecursiveDir)" />
+        <Copy SourceFiles="@(WkHtmlToPdfFiles)" DestinationFolder="$(OutputPath)\wkhtmltopdf\Executables\%(RecursiveDir)" />
     </Target>
 
-    <Target Name="CopyWkhtmltopdfFilesToPublish" AfterTargets="AfterPublish">
+    <Target Name="CopyWkHtmlToPdfFilesAfterPublish" AfterTargets="AfterPublish">
         <Message Text="Copying wkhtmltopdf files" />
-        <ItemGroup>
-            <Files Include="$(MSBuildThisFileDirectory)../wkhtmltopdf/Executables/**/*.*"></Files>
-        </ItemGroup>
-        <Copy SourceFiles="@(Files)" DestinationFolder="$(PublishDir)\wkhtmltopdf\Executables\%(RecursiveDir)" />
+        <Copy SourceFiles="@(WkHtmlToPdfFiles)" DestinationFolder="$(PublishDir)\wkhtmltopdf\Executables\%(RecursiveDir)" />
     </Target>
 
 </Project>
