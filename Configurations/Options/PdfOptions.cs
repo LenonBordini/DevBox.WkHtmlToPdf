@@ -4,10 +4,18 @@ using DevBox.WkHtmlToPdf.Enums;
 namespace DevBox.WkHtmlToPdf.Configurations.Options;
 
 /// <summary>
-/// See https://wkhtmltopdf.org/usage/wkhtmltopdf.txt.
+/// See <see href="https://wkhtmltopdf.org/usage/wkhtmltopdf.txt">wkhtmltopdf documentation</see>.
 /// </summary>
 public class PdfOptions
 {
+    public PdfOptions()
+    {
+        Margin = new PdfMargin();
+        PageOptions = new PageOptions();
+        CustomPageSize = new CustomPageSize();
+        HeaderFooterOptions = new HeaderFooterOptions();
+    }
+
     /// <summary>
     /// Doesn't delete temp files (.html + .pdf), and saves the wkhtmltopdf command inside a .txt (default false)
     /// <para>Useful when debugging</para>
@@ -58,7 +66,6 @@ public class PdfOptions
     /// <summary>
     /// Sets a custom page size
     /// </summary>
-    /// <remarks>Used when <see cref="PageSize"/> is set to Custom</remarks>
     public CustomPageSize CustomPageSize { get; set; }
 
     /// <summary>

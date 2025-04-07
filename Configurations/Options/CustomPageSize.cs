@@ -4,6 +4,11 @@ namespace DevBox.WkHtmlToPdf.Configurations.Options;
 
 public class CustomPageSize
 {
+    public CustomPageSize()
+    {
+
+    }
+
     public CustomPageSize(int height, int width)
     {
         Height = height;
@@ -14,11 +19,11 @@ public class CustomPageSize
     /// Page height (in mm)
     /// </summary>
     [CommandFlag("--page-height")]
-    public int Height { get; }
+    public int? Height { get; }
 
     /// <summary>
     /// Page width (in mm)
     /// </summary>
     [CommandFlag("--page-width")]
-    public int Width { get; }
+    public int? Width { get; }
 }

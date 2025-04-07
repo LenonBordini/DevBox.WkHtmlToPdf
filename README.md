@@ -66,6 +66,7 @@ If you have a `BaseController`, you can do like below if you want (no need to in
 public abstract class BaseController
 {
     protected async Task<byte[]> ConvertViewToPdfAsync<T>(string viewName, T model = null, Action<PdfOptions> configureOptions = null)
+        where T : class
     {
         var pdfConverter = HttpContext.RequestServices.GetRequiredService<IPdfConverterService>();
         return await pdfConverter.FromViewAsync(viewName, model, configureOptions);

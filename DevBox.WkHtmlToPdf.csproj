@@ -12,9 +12,11 @@
     <Description>A simple wrapper for wkhtmltopdf in ASP.NET Core</Description>
     <RepositoryUrl>https://github.com/lenonbordini/DevBox.WkHtmlToPdf</RepositoryUrl>
     <PackageProjectUrl>https://github.com/lenonbordini/DevBox.WkHtmlToPdf</PackageProjectUrl>
-    <PackageTags>Common</PackageTags>
+    <PackageTags>wkhtmltopdf report</PackageTags>
     <Title>DevBox.WkHtmlToPdf</Title>
     <Summary>A simple wrapper for wkhtmltopdf in ASP.NET Core</Summary>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,8 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Drivers/Executables/**/*.*" Pack="true" PackagePath="wkhtmltopdf\Executables"></None>
-    <None Include="build/*.*" Pack="true" PackagePath="build"></None>
+    <None Include="LICENSE" Pack="true" PackagePath="" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="Drivers/Executables/**/*.*" Pack="true" PackagePath="wkhtmltopdf\Executables" />
+    <None Include="build/*.*" Pack="true" PackagePath="build" />
   </ItemGroup>
 
   <Target Name="PostClean" AfterTargets="Clean">

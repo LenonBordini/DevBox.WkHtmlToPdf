@@ -1,59 +1,72 @@
 using DevBox.WkHtmlToPdf.Configurations.Options;
-using DevBox.WkHtmlToPdf.Drivers;
 using DevBox.WkHtmlToPdf.Extensions;
+using DevBox.WkHtmlToPdf.Helpers;
+using DevBox.WkHtmlToPdf.Interfaces.Driver;
 using DevBox.WkHtmlToPdf.Interfaces.Services;
 
 namespace DevBox.WkHtmlToPdf.Services;
 
 public class PdfConverterService : IPdfConverterService
 {
+    private readonly IWkHtmlToPdfDriver _wkHtmlToPdfDriver;
     private readonly IViewRenderService _viewRenderService;
     private readonly PdfOptions _pdfOptions;
 
-    public PdfConverterService(IViewRenderService viewRenderService, PdfOptions pdfOptions)
+    public PdfConverterService(IWkHtmlToPdfDriver wkHtmlToPdfDriver, IViewRenderService viewRenderService, PdfOptions pdfOptions)
     {
+        _wkHtmlToPdfDriver = wkHtmlToPdfDriver;
         _viewRenderService = viewRenderService;
         _pdfOptions = pdfOptions;
     }
 
-    public async Task<byte[]> FromHtmlAsync(string html)
+    public async Task<byte[]> FromHtmlAsync(string html, Action<PdfOptions> configurePdfOptions)
     {
-        return await WkHtmlToPdfDriver.ConvertHtmlAsync(html, _pdfOptions);
+        var options = GetOptions(configurePdfOptions);
+        return await _wkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
     }
 
-    public async Task<byte[]> FromHtmlAsync(string html, Action<PdfOptions> configureOptions)
+    public async Task<byte[]> FromHtmlAsync(string html)
     {
-        PdfOptions options;
-        if (configureOptions == null)
-            options = _pdfOptions;
-        else
-        {
-            options = _pdfOptions.Clone();
-            configureOptions.Invoke(options);
-        }
+        return await FromHtmlAsync(html, null);
+    }
 
-        return await WkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
+    public async Task<byte[]> FromViewAsync(string viewName, object model, Action<PdfOptions> configurePdfOptions)
+    {
+        var html = await _viewRenderService.RenderToStringAsync(viewName, model);
+        var options = GetOptions(configurePdfOptions);
+
+        if (!string.IsNullOrEmpty(options.HeaderFooterOptions?.HeaderHtml) && !FileHelper.IsHtml(options.HeaderFooterOptions.HeaderHtml))
+            options.HeaderFooterOptions.HeaderHtml = await _viewRenderService.RenderToStringAsync(options.HeaderFooterOptions.HeaderHtml, model);
+
+        if (!string.IsNullOrEmpty(options.HeaderFooterOptions?.FooterHtml) && !FileHelper.IsHtml(options.HeaderFooterOptions.FooterHtml))
+            options.HeaderFooterOptions.FooterHtml = await _viewRenderService.RenderToStringAsync(options.HeaderFooterOptions.FooterHtml, model);
+
+        return await _wkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
     }
 
     public async Task<byte[]> FromViewAsync(string viewName, object model)
     {
-        var html = await _viewRenderService.RenderToStringAsync(viewName, model);
-        return await FromHtmlAsync(html);
+        return await FromViewAsync(viewName, model, null);
+    }
+
+    public async Task<byte[]> FromViewAsync(string viewName, Action<PdfOptions> configurePdfOptions)
+    {
+        return await FromViewAsync(viewName, null, configurePdfOptions);
     }
 
     public async Task<byte[]> FromViewAsync(string viewName)
     {
-        return await FromViewAsync(viewName, null);
+        return await FromViewAsync(viewName, null, null);
     }
 
-    public async Task<byte[]> FromViewAsync(string viewName, object model, Action<PdfOptions> configureOptions)
+    private PdfOptions GetOptions(Action<PdfOptions> configurePdfOptions)
     {
-        var html = await _viewRenderService.RenderToStringAsync(viewName, model);
-        return await FromHtmlAsync(html, configureOptions);
-    }
+        if (configurePdfOptions == null)
+            return _pdfOptions;
 
-    public async Task<byte[]> FromViewAsync(string viewName, Action<PdfOptions> configureOptions)
-    {
-        return await FromViewAsync(viewName, null, configureOptions);
+        var options = _pdfOptions.Clone();
+        configurePdfOptions.Invoke(options);
+
+        return options;
     }
 }

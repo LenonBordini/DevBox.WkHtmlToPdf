@@ -1,6 +1,7 @@
 <Project>
 
     <Target Name="CopyWkhtmltopdfFiles" BeforeTargets="Build">
+        <Message Text="Copying wkhtmltopdf files" />
         <ItemGroup>     
             <Files Include="$(MSBuildThisFileDirectory)../wkhtmltopdf/Executables/**/*.*"></Files>
         </ItemGroup>
@@ -8,6 +9,7 @@
     </Target>
 
     <Target Name="CopyWkhtmltopdfFilesToPublish" AfterTargets="AfterPublish">
+        <Message Text="Copying wkhtmltopdf files" />
         <ItemGroup>
             <Files Include="$(MSBuildThisFileDirectory)../wkhtmltopdf/Executables/**/*.*"></Files>
         </ItemGroup>

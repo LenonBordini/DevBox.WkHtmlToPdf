@@ -24,6 +24,7 @@ public class HeaderFooterOptions
 
     /// <summary>
     /// Adds a html footer
+    /// <para>If doesn't end with ".htm" or ".html", will be rendered as a View, using the same model</para>
     /// </summary>
     [CommandFlag("--footer-html")]
     public string FooterHtml { get; set; }
@@ -72,6 +73,7 @@ public class HeaderFooterOptions
 
     /// <summary>
     /// Adds a html header
+    /// <para>If doesn't end with ".htm" or ".html", will be rendered as a View, using the same model</para>
     /// </summary>
     [CommandFlag("--header-html")]
     public string HeaderHtml { get; set; }

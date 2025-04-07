@@ -1,7 +1,7 @@
 namespace DevBox.WkHtmlToPdf.Enums;
 
 /// <summary>
-/// Page size, see: https://doc.qt.io/archives/qt-4.8/qprinter.html#PaperSize-enum.
+/// Page size
 /// </summary>
 public enum PageSize
 {
