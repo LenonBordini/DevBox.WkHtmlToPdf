@@ -21,7 +21,7 @@ dotnet add package DevBox.WkHtmlToPdf
 
 ```csharp
 services.AddHttpContextAccessor();
-services.AddWkhtmltopdf(options =>
+services.AddWkHtmlToPdf(options =>
 {
     options.Orientation = PdfOrientation.Landscape;
     // ...other global options
