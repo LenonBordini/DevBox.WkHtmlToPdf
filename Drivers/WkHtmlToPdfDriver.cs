@@ -118,7 +118,9 @@ internal class WkHtmlToPdfDriver : IWkHtmlToPdfDriver
         if (FileHelper.IsHtml(html))
             return html;
 
-        await File.WriteAllTextAsync($"{fileName}-{sufix}.html", html);
-        return fileName;
+        var htmlFile = $"{fileName}-{sufix}.html";
+        await File.WriteAllTextAsync(htmlFile, html);
+
+        return htmlFile;
     }
 }
