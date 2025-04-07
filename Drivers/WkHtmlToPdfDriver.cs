@@ -21,11 +21,11 @@ internal class WkHtmlToPdfDriver : IWkHtmlToPdfDriver
         var basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.RelativeSearchPath ?? string.Empty, "wkhtmltopdf");
 
         if (_osPlatform == OSPlatform.Windows)
-            _executablePath = Path.Combine(basePath, @"Executables\Windows\wkhtmltopdf.exe");
+            _executablePath = Path.Combine(basePath, "Executables/Windows/wkhtmltopdf.exe");
         else if (_osPlatform == OSPlatform.Linux)
-            _executablePath = Path.Combine(basePath, @"Executables\Linux\wkhtmltopdf");
+            _executablePath = Path.Combine(basePath, "Executables/Linux/wkhtmltopdf");
         else if (_osPlatform == OSPlatform.OSX)
-            _executablePath = Path.Combine(basePath, @"Executables\Mac\wkhtmltopdf");
+            _executablePath = Path.Combine(basePath, "Executables/Mac/wkhtmltopdf");
         else
             throw new Exception("Could not determine wkhtmltopdf executable path");
 
