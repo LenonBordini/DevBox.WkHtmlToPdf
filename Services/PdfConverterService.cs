@@ -35,11 +35,11 @@ public class PdfConverterService : IPdfConverterService
         var html = await _viewRenderService.RenderToStringAsync(viewName, model);
         var options = GetOptions(configurePdfOptions);
 
-        if (!string.IsNullOrEmpty(options.HeaderFooterOptions?.HeaderHtml) && !FileHelper.IsHtml(options.HeaderFooterOptions.HeaderHtml))
-            options.HeaderFooterOptions.HeaderHtml = await _viewRenderService.RenderToStringAsync(options.HeaderFooterOptions.HeaderHtml, model);
+        if (!string.IsNullOrEmpty(options.HeaderFooter?.HeaderHtml) && !FileHelper.IsHtml(options.HeaderFooter.HeaderHtml))
+            options.HeaderFooter.HeaderHtml = await _viewRenderService.RenderToStringAsync(options.HeaderFooter.HeaderHtml, model);
 
-        if (!string.IsNullOrEmpty(options.HeaderFooterOptions?.FooterHtml) && !FileHelper.IsHtml(options.HeaderFooterOptions.FooterHtml))
-            options.HeaderFooterOptions.FooterHtml = await _viewRenderService.RenderToStringAsync(options.HeaderFooterOptions.FooterHtml, model);
+        if (!string.IsNullOrEmpty(options.HeaderFooter?.FooterHtml) && !FileHelper.IsHtml(options.HeaderFooter.FooterHtml))
+            options.HeaderFooter.FooterHtml = await _viewRenderService.RenderToStringAsync(options.HeaderFooter.FooterHtml, model);
 
         return await _wkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
     }

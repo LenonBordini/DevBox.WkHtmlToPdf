@@ -11,9 +11,9 @@ public class PdfOptions
     public PdfOptions()
     {
         Margin = new PdfMargin();
-        PageOptions = new PageOptions();
-        CustomPageSize = new CustomPageSize();
-        HeaderFooterOptions = new HeaderFooterOptions();
+        Page = new PageOptions();
+        CustomPageSize = new CustomPageSizeOptions();
+        HeaderFooter = new HeaderFooterOptions();
     }
 
     /// <summary>
@@ -66,15 +66,15 @@ public class PdfOptions
     /// <summary>
     /// Sets a custom page size
     /// </summary>
-    public CustomPageSize CustomPageSize { get; set; }
+    public CustomPageSizeOptions CustomPageSize { get; set; }
 
     /// <summary>
     /// Sets page options
     /// </summary>
-    public PageOptions PageOptions { get; set; }
+    public PageOptions Page { get; set; }
 
     /// <summary>
     /// Sets header and footer options
     /// </summary>
-    public HeaderFooterOptions HeaderFooterOptions { get; set; }
+    public HeaderFooterOptions HeaderFooter { get; set; }
 }

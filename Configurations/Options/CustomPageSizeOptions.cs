@@ -2,14 +2,14 @@ using DevBox.WkHtmlToPdf.Configurations.Attributes;
 
 namespace DevBox.WkHtmlToPdf.Configurations.Options;
 
-public class CustomPageSize
+public class CustomPageSizeOptions
 {
-    public CustomPageSize()
+    public CustomPageSizeOptions()
     {
 
     }
 
-    public CustomPageSize(int height, int width)
+    public CustomPageSizeOptions(int height, int width)
     {
         Height = height;
         Width = width;

@@ -48,10 +48,10 @@ internal class WkHtmlToPdfDriver : IWkHtmlToPdfDriver
             tempFileNameWithoutExtension = Path.Combine(_tempPath, $"{DateTime.Now:yyMMddHHmmss}-{Guid.NewGuid():N}");
             await File.WriteAllTextAsync($"{tempFileNameWithoutExtension}.html", html);
 
-            if (!string.IsNullOrEmpty(pdfOptions.HeaderFooterOptions?.HeaderHtml))
-                pdfOptions.HeaderFooterOptions.HeaderHtml = await SaveTempHtmlAsync(pdfOptions.HeaderFooterOptions.HeaderHtml, tempFileNameWithoutExtension, "header");
-            if (!string.IsNullOrEmpty(pdfOptions.HeaderFooterOptions?.FooterHtml))
-                pdfOptions.HeaderFooterOptions.FooterHtml = await SaveTempHtmlAsync(pdfOptions.HeaderFooterOptions.FooterHtml, tempFileNameWithoutExtension, "footer");
+            if (!string.IsNullOrEmpty(pdfOptions.HeaderFooter?.HeaderHtml))
+                pdfOptions.HeaderFooter.HeaderHtml = await SaveTempHtmlAsync(pdfOptions.HeaderFooter.HeaderHtml, tempFileNameWithoutExtension, "header");
+            if (!string.IsNullOrEmpty(pdfOptions.HeaderFooter?.FooterHtml))
+                pdfOptions.HeaderFooter.FooterHtml = await SaveTempHtmlAsync(pdfOptions.HeaderFooter.FooterHtml, tempFileNameWithoutExtension, "footer");
 
             var arguments = "-q";
             if (pdfOptions != null)
