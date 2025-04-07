@@ -1,5 +1,7 @@
 # DevBox.WkHtmlToPdf
 
+![NuGet Version](https://img.shields.io/nuget/v/DevBox.WkHtmlToPdf?style=for-the-badge)
+
 A simple wrapper for [wkhtmltopdf](https://wkhtmltopdf.org/), enabling conversion of **HTML** or **Razor Views** directly into **PDF files** within [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet) applications.
 
 > This is a refactor from [Wkhtmltopdf.NetCore](https://github.com/fpanaccia/Wkhtmltopdf.NetCore-deprecated) since is deprecated.\
