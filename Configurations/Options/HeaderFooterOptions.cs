@@ -20,7 +20,7 @@ public class HeaderFooterOptions
     /// Set footer font size (default 12)
     /// </summary>
     [CommandFlag("--footer-font-size")]
-    public int? FooterFontSize { get; set; }
+    public string FooterFontSize { get; set; }
 
     /// <summary>
     /// Adds a html footer
@@ -51,7 +51,7 @@ public class HeaderFooterOptions
     /// Spacing between footer and content in mm (default 0)
     /// </summary>
     [CommandFlag("--footer-spacing")]
-    public decimal? FooterSpacing { get; set; }
+    public string FooterSpacing { get; set; }
 
     /// <summary>
     /// Centered header text
@@ -69,7 +69,7 @@ public class HeaderFooterOptions
     /// Set header font size (default 12)
     /// </summary>
     [CommandFlag("--header-font-size")]
-    public int? HeaderFontSize { get; set; }
+    public string HeaderFontSize { get; set; }
 
     /// <summary>
     /// Adds a html header
@@ -100,7 +100,7 @@ public class HeaderFooterOptions
     /// Spacing between header and content in mm (default 0)
     /// </summary>
     [CommandFlag("--header-spacing")]
-    public decimal? HeaderSpacing { get; set; }
+    public string HeaderSpacing { get; set; }
 
     /// <summary>
     /// Replace [name] with value in header and footer

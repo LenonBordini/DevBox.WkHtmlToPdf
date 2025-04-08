@@ -9,21 +9,21 @@ public class CustomPageSizeOptions
 
     }
 
-    public CustomPageSizeOptions(int height, int width)
+    public CustomPageSizeOptions(string height, string width)
     {
         Height = height;
         Width = width;
     }
 
     /// <summary>
-    /// Page height (in mm)
+    /// Page height
     /// </summary>
     [CommandFlag("--page-height")]
-    public int? Height { get; }
+    public string Height { get; }
 
     /// <summary>
-    /// Page width (in mm)
+    /// Page width
     /// </summary>
     [CommandFlag("--page-width")]
-    public int? Width { get; }
+    public string Width { get; }
 }

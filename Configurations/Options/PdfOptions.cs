@@ -75,6 +75,12 @@ public class PdfOptions
     public CustomPageSizeOptions CustomPageSize { get; set; }
 
     /// <summary>
+    /// The title of the generated pdf file (The title of the first document is used if not specified)
+    /// </summary>
+    [CommandFlag("--title")]
+    public string Title { get; set; }
+
+    /// <summary>
     /// Sets page options
     /// </summary>
     public PageOptions Page { get; set; }

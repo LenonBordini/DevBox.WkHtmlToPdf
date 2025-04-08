@@ -59,6 +59,7 @@ services.AddWkHtmlToPdf(options =>
     options.SetExecutableFilePath("custom-path/wkhtmltopdf.exe");
 
     // Customize the default options
+    options.Title = "My PDF";
     options.PageSize = PageSize.A4;
     options.Orientation = PdfOrientation.Landscape;
     // ...
@@ -83,6 +84,13 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev
 ```
 
+- If you have problems with differents fonts in **Windows** vs **Docker**, you can try:
+
+```dockerfile
+RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev fontconfig fonts-liberation
+RUN fc-cache -f -v
+```
+
 ## Usage
 
 Inject `IPdfConverterService` in any class you need.
@@ -93,6 +101,7 @@ Inject `IPdfConverterService` in any class you need.
 var buffer = await _pdfConverterService.FromHtmlAsync("<html>...</html>", options =>
 {
     // Overrides the default options
+    options.Title = "My Report";
 });
 ```
 

@@ -9,18 +9,18 @@ public class PdfMargin
 
     }
 
-    public PdfMargin(int pdfMargin)
+    public PdfMargin(string pdfMargin)
     {
         Top = Right = Bottom = Left = pdfMargin;
     }
 
-    public PdfMargin(int? topBottom, int? leftRight)
+    public PdfMargin(string topBottom, string leftRight)
     {
         Top = Bottom = topBottom;
         Left = Right = leftRight;
     }
 
-    public PdfMargin(int? top, int? right, int? bottom, int? left)
+    public PdfMargin(string top, string right, string bottom, string left)
     {
         Top = top;
         Right = right;
@@ -32,23 +32,23 @@ public class PdfMargin
     /// Set the page top margin (in mm)
     /// </summary>
     [CommandFlag("--margin-top", alias: "-T")]
-    public int? Top { get; }
+    public string Top { get; }
 
     /// <summary>
     /// Set the page right margin (in mm, default 10)
     /// </summary>
     [CommandFlag("--margin-right", alias: "-R")]
-    public int? Right { get; }
+    public string Right { get; }
 
     /// <summary>
     /// Set the page bottom margin (in mm)
     /// </summary>
     [CommandFlag("--margin-bottom", alias: "-B")]
-    public int? Bottom { get; }
+    public string Bottom { get; }
 
     /// <summary>
     /// Set the page left margin (in mm, default 10)
     /// </summary>
     [CommandFlag("--margin-left", alias: "-L")]
-    public int? Left { get; }
+    public string Left { get; }
 }
