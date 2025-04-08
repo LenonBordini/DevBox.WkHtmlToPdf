@@ -83,4 +83,28 @@ public class PdfOptions
     /// Sets header and footer options
     /// </summary>
     public HeaderFooterOptions HeaderFooter { get; set; }
+
+    /// <summary>
+    /// Sets the path to the wkhtmltopdf executable file
+    /// </summary>
+    /// <param name="executableFilePath">The path to the wkhtmltopdf executable file</param>
+    public void SetExecutableFilePath(string executableFilePath)
+    {
+        if (!File.Exists(executableFilePath))
+            throw new Exception($"Could not find executable file path for wkhtmltopdf in \"{nameof(executableFilePath)}\"");
+
+        WkHtmlToPdfDriver.ExecutableFilePath = executableFilePath;
+    }
+
+    /// <summary>
+    /// Sets the path to the temp files used/created by wkhtmltopdf
+    /// </summary>
+    /// <param name="tempPath">The path to the temp files used/created by wkhtmltopdf</param>
+    public void SetTempPath(string tempPath)
+    {
+        if (!Directory.Exists(tempPath))
+            Directory.CreateDirectory(tempPath);
+
+        WkHtmlToPdfDriver.TempPath = tempPath;
+    }
 }

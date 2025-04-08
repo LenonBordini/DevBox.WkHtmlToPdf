@@ -1,20 +1,17 @@
 using DevBox.WkHtmlToPdf.Configurations.Options;
 using DevBox.WkHtmlToPdf.Extensions;
 using DevBox.WkHtmlToPdf.Helpers;
-using DevBox.WkHtmlToPdf.Interfaces.Driver;
 using DevBox.WkHtmlToPdf.Interfaces.Services;
 
 namespace DevBox.WkHtmlToPdf.Services;
 
 public class PdfConverterService : IPdfConverterService
 {
-    private readonly IWkHtmlToPdfDriver _wkHtmlToPdfDriver;
     private readonly IViewRenderService _viewRenderService;
     private readonly PdfOptions _pdfOptions;
 
-    public PdfConverterService(IWkHtmlToPdfDriver wkHtmlToPdfDriver, IViewRenderService viewRenderService, PdfOptions pdfOptions)
+    public PdfConverterService(IViewRenderService viewRenderService, PdfOptions pdfOptions)
     {
-        _wkHtmlToPdfDriver = wkHtmlToPdfDriver;
         _viewRenderService = viewRenderService;
         _pdfOptions = pdfOptions;
     }
@@ -22,7 +19,7 @@ public class PdfConverterService : IPdfConverterService
     public async Task<byte[]> FromHtmlAsync(string html, Action<PdfOptions> configurePdfOptions)
     {
         var options = GetOptions(configurePdfOptions);
-        return await _wkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
+        return await WkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
     }
 
     public async Task<byte[]> FromHtmlAsync(string html)
@@ -41,7 +38,7 @@ public class PdfConverterService : IPdfConverterService
         if (!string.IsNullOrEmpty(options.HeaderFooter?.FooterHtml) && !FileHelper.IsHtml(options.HeaderFooter.FooterHtml))
             options.HeaderFooter.FooterHtml = await _viewRenderService.RenderToStringAsync(options.HeaderFooter.FooterHtml, model);
 
-        return await _wkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
+        return await WkHtmlToPdfDriver.ConvertHtmlAsync(html, options);
     }
 
     public async Task<byte[]> FromViewAsync(string viewName, object model)

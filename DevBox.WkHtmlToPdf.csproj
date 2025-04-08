@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PackageId>DevBox.WkHtmlToPdf</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Lenon Bordini</Authors>
     <PackageDescription>A simple wrapper for wkhtmltopdf in ASP.NET Core</PackageDescription>
     <Description>A simple wrapper for wkhtmltopdf in ASP.NET Core</Description>
@@ -28,8 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="build/*.*" Pack="true" PackagePath="build" />
-    <None Include="Drivers/Executables/**/*.*" Pack="true" PackagePath="wkhtmltopdf\Executables" />
     <None Include="README.md" Pack="true" PackagePath="\" />
     <None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>

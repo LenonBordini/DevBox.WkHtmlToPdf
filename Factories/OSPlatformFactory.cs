@@ -2,25 +2,34 @@ using System.Runtime.InteropServices;
 
 namespace DevBox.WkHtmlToPdf.Factories;
 
-public class OSPlatformFactory
+internal class OSPlatformFactory
 {
-    private static OSPlatform? _osPlatform = null;
-
-    public static OSPlatform GetOSPlatform()
+    private static OsPlatform? _osPlatform;
+    public static OsPlatform OsPlatform
     {
-        if (_osPlatform != null)
-            return (OSPlatform)_osPlatform;
+        get
+        {
+            if (_osPlatform != null)
+                return (OsPlatform)_osPlatform;
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            _osPlatform = OSPlatform.Windows;
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            _osPlatform = OSPlatform.Linux;
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            _osPlatform = OSPlatform.OSX;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                _osPlatform = OsPlatform.Windows;
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                _osPlatform = OsPlatform.Linux;
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                _osPlatform = OsPlatform.Mac;
+            else
+                _osPlatform = OsPlatform.Unknown;
 
-        if (_osPlatform == null)
-            throw new Exception("Unable to determine operating system platform");
-
-        return (OSPlatform)_osPlatform;
+            return (OsPlatform)_osPlatform;
+        }
     }
+}
+
+internal enum OsPlatform
+{
+    Unknown = 0,
+    Windows = 1,
+    Linux = 2,
+    Mac = 3
 }

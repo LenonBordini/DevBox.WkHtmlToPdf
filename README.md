@@ -17,18 +17,71 @@ A simple wrapper for [wkhtmltopdf](https://wkhtmltopdf.org/), enabling conversio
 dotnet add package DevBox.WkHtmlToPdf
 ```
 
-2. Configure your `IServiceCollection`:
+2. Download the desirable version of [wkhtmltopdf](https://wkhtmltopdf.org/downloads.html#stable) and add to your project:
+
+```bash
+.
+├── MyProject
+│   ├── WkHtmlToPdf
+│   │   ├── Windows
+│   │   │   └── wkhtmltopdf.exe
+│   │   └── Linux
+│   │       └── wkhtmltopdf
+│   └── MyProject.csproj
+└── MyProject.sln
+```
+
+| OS/Distribution | Supported on | Architectures |
+| :--             | :--          | :--           |
+| Windows         |              | [64-bit](./WkHtmlToPdf/Windows/wkhtmltopdf-64.exe) |
+| Debian          | 11 bullseye  | [64-bit](./WkHtmlToPdf/Linux/wkhtmltopdf-debian-11-bullseye-amd64) |
+
+> The package could copy the binaries automatically and verify the OS, but it would be large. This way the executable becomes configurable.
+
+- Edit your `.csproj`:
+
+```xml
+<ItemGroup>
+    <Content Include="WkHtmlToPdf\**\*.*">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+</ItemGroup>
+```
+
+> If you have wkhtmltopdf installed in your server, you can skip item 2 configuring through `SetExecutableFilePath` using an absolute path.
+
+3. Configure your `IServiceCollection`:
 
 ```csharp
 services.AddHttpContextAccessor();
 services.AddWkHtmlToPdf(options =>
 {
+    options.SetExecutableFilePath("custom-path/wkhtmltopdf.exe");
+
+    // Customize the default options
+    options.PageSize = PageSize.A4;
     options.Orientation = PdfOrientation.Landscape;
-    // ...other global options
+    // ...
 });
 ```
 
-> You can find all possible options [here](./Configurations/Options/PdfOptions.cs).
+- Default executable file path:
+  - Windows: `WkHtmlToPdf/Windows/wkhtmltopdf.exe`
+  - Linux: `WkHtmlToPdf/Linux/wkhtmltopdf`
+  - MAC: `WkHtmlToPdf/Mac/wkhtmltopdf`
+
+4. If you work with **Linux** or **Docker**, you need to install `libgdiplus` and `libc6-dev`.
+
+```bash
+apt-get update
+apt-get -y install libgdiplus libc6-dev
+```
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+# ...
+RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev
+```
 
 ## Usage
 
@@ -37,63 +90,17 @@ Inject `IPdfConverterService` in any class you need.
 1. Converting a **HTML**:
 
 ```csharp
-var buffer = await _pdfConverterService.FromHtmlAsync("<html>...</html>");
-
-// Customizing global options
 var buffer = await _pdfConverterService.FromHtmlAsync("<html>...</html>", options =>
 {
-    // ...
+    // Overrides the default options
 });
 ```
 
 2. Converting a **Razor View**:
 
 ```csharp
-// No model
-var buffer = await _pdfConverterService.FromViewAsync("PathToView/ViewName");
-
-// With model
-var buffer = await _pdfConverterService.FromViewAsync("PathToView/ViewName", model);
-
-// Customizing global options
 var buffer = await _pdfConverterService.FromViewAsync("PathToView/ViewName", model, options =>
 {
-    // ...
+    // Overrides the default options
 });
 ```
-
-If you have a `BaseController`, you can do like below if you want (no need to inject `IPdfConverterService` everytime):
-
-```csharp
-public abstract class BaseController
-{
-    protected async Task<byte[]> ConvertViewToPdfAsync<T>(string viewName, T model = null, Action<PdfOptions> configureOptions = null)
-        where T : class
-    {
-        var pdfConverter = HttpContext.RequestServices.GetRequiredService<IPdfConverterService>();
-        return await pdfConverter.FromViewAsync(viewName, model, configureOptions);
-    }
-}
-
-public class ExampleController : BaseController
-{
-    [HttpGet]
-    public async Task<IActionResult> IndexAsync()
-    {
-        var buffer = await ConvertViewToPdfAsync("PathToView/ViewName");
-        return File(buffer, "application/pdf", "report.pdf");
-    }
-}
-```
-
-## Docker
-
-To deploy using docker, we need to install **libgdiplus** and **libc6-dev**. You can configure [Dockerfile](https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-9-0#create-the-dockerfile) like below:
-
-```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
-# ...
-RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev
-```
-
-> You'll also need **libgdiplus** and **libc6-dev** on **linux**.

@@ -1,6 +1,4 @@
 using DevBox.WkHtmlToPdf.Configurations.Options;
-using DevBox.WkHtmlToPdf.Drivers;
-using DevBox.WkHtmlToPdf.Interfaces.Driver;
 using DevBox.WkHtmlToPdf.Interfaces.Services;
 using DevBox.WkHtmlToPdf.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -18,7 +16,6 @@ internal static class DependencyInjectionConfiguration
         services.AddSingleton<IRazorViewEngine, RazorViewEngine>();
         services.AddTransient<ITempDataProvider, SessionStateTempDataProvider>();
 
-        services.AddSingleton<IWkHtmlToPdfDriver, WkHtmlToPdfDriver>();
         services.AddTransient<IViewRenderService, ViewRenderService>();
         services.AddTransient<IPdfConverterService, PdfConverterService>();
 
