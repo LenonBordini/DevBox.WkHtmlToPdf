@@ -35,6 +35,12 @@ public class PdfOptions
     public int? Copies { get; set; }
 
     /// <summary>
+    /// Change the dpi explicitly (this has no effect on X11 based systems) (default 96)
+    /// </summary>
+    [CommandFlag("--dpi", alias: "-d")]
+    public int? Dpi { get; set; }
+
+    /// <summary>
     /// PDF will be generated in grayscale
     /// </summary>
     [BooleanCommandFlag("--grayscale", trueAlias: "-g")]
