@@ -19,11 +19,11 @@ public class CustomPageSizeOptions
     /// Page height
     /// </summary>
     [CommandFlag("--page-height")]
-    public string Height { get; }
+    public string Height { get; set; }
 
     /// <summary>
     /// Page width
     /// </summary>
     [CommandFlag("--page-width")]
-    public string Width { get; }
+    public string Width { get; set; }
 }

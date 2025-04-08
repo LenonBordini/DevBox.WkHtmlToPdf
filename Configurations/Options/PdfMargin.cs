@@ -32,23 +32,23 @@ public class PdfMargin
     /// Set the page top margin (in mm)
     /// </summary>
     [CommandFlag("--margin-top", alias: "-T")]
-    public string Top { get; }
+    public string Top { get; set; }
 
     /// <summary>
     /// Set the page right margin (in mm, default 10)
     /// </summary>
     [CommandFlag("--margin-right", alias: "-R")]
-    public string Right { get; }
+    public string Right { get; set; }
 
     /// <summary>
     /// Set the page bottom margin (in mm)
     /// </summary>
     [CommandFlag("--margin-bottom", alias: "-B")]
-    public string Bottom { get; }
+    public string Bottom { get; set; }
 
     /// <summary>
     /// Set the page left margin (in mm, default 10)
     /// </summary>
     [CommandFlag("--margin-left", alias: "-L")]
-    public string Left { get; }
+    public string Left { get; set; }
 }
