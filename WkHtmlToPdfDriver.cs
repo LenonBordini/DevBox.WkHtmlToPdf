@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using DevBox.WkHtmlToPdf.Configurations.Options;
 using DevBox.WkHtmlToPdf.Extensions;
 using DevBox.WkHtmlToPdf.Factories;
