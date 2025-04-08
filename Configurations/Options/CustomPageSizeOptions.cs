@@ -9,7 +9,7 @@ public class CustomPageSizeOptions
 
     }
 
-    public CustomPageSizeOptions(string height, string width)
+    public CustomPageSizeOptions(object height, object width)
     {
         Height = height;
         Width = width;
@@ -19,11 +19,11 @@ public class CustomPageSizeOptions
     /// Page height
     /// </summary>
     [CommandFlag("--page-height")]
-    public string Height { get; set; }
+    public object Height { get; set; }
 
     /// <summary>
     /// Page width
     /// </summary>
     [CommandFlag("--page-width")]
-    public string Width { get; set; }
+    public object Width { get; set; }
 }

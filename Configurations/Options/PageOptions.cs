@@ -230,7 +230,7 @@ public class PageOptions
     /// Set viewport size if you have custom scrollbars or css attribute overflow to emulate window size
     /// </summary>
     [CommandFlag("--viewport-size")]
-    public int? ViewPortSize { get; set; }
+    public object ViewPortSize { get; set; }
 
     /// <summary>
     /// Wait until window.status is equal to this string before rendering page
