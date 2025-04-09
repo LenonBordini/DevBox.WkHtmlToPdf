@@ -66,10 +66,10 @@ internal static class WkHtmlToPdfDriver
         {
             if (pdfOptions?.KeepTempFiles != true)
             {
-                if (File.Exists($"{tempFileNameWithoutExtension}.html"))
-                    File.Delete($"{tempFileNameWithoutExtension}.html");
-                if (File.Exists($"{tempFileNameWithoutExtension}.pdf"))
-                    File.Delete($"{tempFileNameWithoutExtension}.pdf");
+                var filesToDelete = new[] { ".html", "-header.html", "-footer.html", ".pdf" };
+                foreach (var fileToDelete in filesToDelete)
+                    if (File.Exists($"{tempFileNameWithoutExtension}{fileToDelete}"))
+                        File.Delete($"{tempFileNameWithoutExtension}{fileToDelete}");
             }
         }
     }
