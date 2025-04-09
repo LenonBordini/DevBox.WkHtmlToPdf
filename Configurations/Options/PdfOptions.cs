@@ -97,7 +97,7 @@ public class PdfOptions
     public void SetExecutableFilePath(string executableFilePath)
     {
         if (!File.Exists(executableFilePath))
-            throw new Exception($"Could not find executable file path for wkhtmltopdf in \"{nameof(executableFilePath)}\"");
+            throw new Exception($"Could not find executable file path for wkhtmltopdf in \"{executableFilePath}\"");
 
         WkHtmlToPdfDriver.ExecutableFilePath = executableFilePath;
     }
