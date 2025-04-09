@@ -56,7 +56,7 @@ dotnet add package DevBox.WkHtmlToPdf
 services.AddHttpContextAccessor();
 services.AddWkHtmlToPdf(options =>
 {
-    options.SetExecutableFilePath("custom-path/wkhtmltopdf.exe");
+    options.SetExecutableFilePath("custom-absolute-path/wkhtmltopdf.exe");
 
     // Customize the default options
     options.Title = "My PDF";
@@ -111,5 +111,6 @@ var buffer = await _pdfConverterService.FromHtmlAsync("<html>...</html>", option
 var buffer = await _pdfConverterService.FromViewAsync("PathToView/ViewName", model, options =>
 {
     // Overrides the default options
+    options.HeaderFooter.HeaderHtml = "PathToView/HeaderViewName";
 });
 ```
