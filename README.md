@@ -110,6 +110,10 @@ var buffer = await _pdfConverterService.FromHtmlAsync("<html>...</html>", option
 ```csharp
 var buffer = await _pdfConverterService.FromViewAsync("PathToView/ViewName", model, options =>
 {
+    // If "true", you'll find all temporary files used by wkhtmltopdf in "bin/Debug/.../WkHtmlToPdf/Temp"
+    // or the path specified in ".SetTempPath"
+    options.KeepTempFiles = Debugger.IsAttached;
+
     // Overrides the default options
     options.HeaderFooter.HeaderHtml = "PathToView/HeaderViewName";
 });
