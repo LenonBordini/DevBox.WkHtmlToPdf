@@ -14,16 +14,16 @@ internal static class WkHtmlToPdfDriver
     /// <summary>
     /// Converts given URL or HTML string to PDF.
     /// </summary>
-    /// <param name="switches">Switches that will be passed to wkhtmltopdf binary.</param>
     /// <param name="html">String containing HTML code that should be converted to PDF.</param>
+    /// <param name="pdfOptions">Options that will be passed to wkhtmltopdf binary.</param>
     /// <returns>PDF as byte array.</returns>
-    public static async Task<byte[]> ConvertHtmlAsync(string html, PdfOptions pdfOptions)
+    public static async Task<byte[]> ConvertHtmlAsync(string html, PdfOptions pdfOptions, CancellationToken cancellationToken = default)
     {
         var tempFileNameWithoutExtension = (string)null;
         try
         {
             tempFileNameWithoutExtension = Path.Combine(TempPath, $"{DateTime.Now:yyMMddHHmmss}-{Guid.NewGuid():N}");
-            await File.WriteAllTextAsync($"{tempFileNameWithoutExtension}.html", html);
+            await File.WriteAllTextAsync($"{tempFileNameWithoutExtension}.html", html, cancellationToken);
 
             if (!string.IsNullOrEmpty(pdfOptions?.HeaderFooter?.HeaderHtml))
                 pdfOptions.HeaderFooter.HeaderHtml = await SaveTempHtmlAsync(pdfOptions.HeaderFooter.HeaderHtml, tempFileNameWithoutExtension, "header");
@@ -45,13 +45,14 @@ internal static class WkHtmlToPdfDriver
             };
 
             if (pdfOptions?.KeepTempFiles == true)
-                await File.WriteAllTextAsync($"{tempFileNameWithoutExtension}-command.txt", $"\"{process.StartInfo.FileName}\" {process.StartInfo.Arguments}");
+                await File.WriteAllTextAsync($"{tempFileNameWithoutExtension}-command.txt", $"\"{process.StartInfo.FileName}\" {process.StartInfo.Arguments}",
+                    cancellationToken);
 
             process.Start();
 
-            var error = await process.StandardError.ReadToEndAsync();
+            var error = await process.StandardError.ReadToEndAsync(cancellationToken);
 
-            await process.WaitForExitAsync();
+            await process.WaitForExitAsync(cancellationToken);
 
             if (!File.Exists($"{tempFileNameWithoutExtension}.pdf"))
                 throw new Exception(error);
@@ -77,9 +78,9 @@ internal static class WkHtmlToPdfDriver
     /// <summary>
     /// Checks if the content of the "html" parameter is HTML, otherwise saves the content to an HTML file
     /// </summary>
+    /// <param name="html">The html to check</param>
     /// <param name="fileName">The file name</param>
     /// <param name="sufix">The file name sufix</param>
-    /// <param name="html">The html to check</param>
     /// <returns>The path to the temp file</returns>
     private static async Task<string> SaveTempHtmlAsync(string html, string fileName, string sufix)
     {
