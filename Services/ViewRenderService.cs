@@ -13,17 +13,11 @@ namespace DevBox.WkHtmlToPdf.Services;
 internal class ViewRenderService : IViewRenderService
 {
     private readonly IRazorViewEngine _razorViewEngine;
-    private readonly ITempDataProvider _tempDataProvider;
     private readonly HttpContext _httpContext;
 
-    public ViewRenderService(
-        IRazorViewEngine razorViewEngine,
-        ITempDataProvider tempDataProvider,
-        IHttpContextAccessor httpContextAccessor
-    )
+    public ViewRenderService(IRazorViewEngine razorViewEngine, IHttpContextAccessor httpContextAccessor)
     {
         _razorViewEngine = razorViewEngine;
-        _tempDataProvider = tempDataProvider;
         _httpContext = httpContextAccessor.HttpContext;
     }
 
@@ -50,7 +44,7 @@ internal class ViewRenderService : IViewRenderService
             Model = model
         };
 
-        var tempData = new TempDataDictionary(_httpContext, _tempDataProvider);
+        var tempData = new TempDataDictionary(_httpContext, new EmptyTempDataProvider());
 
         using var stringWriter = new StringWriter();
 
@@ -62,5 +56,18 @@ internal class ViewRenderService : IViewRenderService
         await viewEngineResult.View.RenderAsync(viewContext);
 
         return stringWriter.ToString();
+    }
+
+    internal class EmptyTempDataProvider : ITempDataProvider
+    {
+        public IDictionary<string, object> LoadTempData(HttpContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveTempData(HttpContext context, IDictionary<string, object> values)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
